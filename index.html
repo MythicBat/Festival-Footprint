@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Map smoke test</title>
+</head>
+<body>
+  <h2>MUSIC FESTIVAL BY STATE</h2>
+  <div id="map" style="max-width:1000px;margin:0 auto;min-height:520px"></div>
+
+  <!-- Load libs -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+  <!-- Embed a tiny test spec -->
+  <script>
+    vegaEmbed("#map", "specs/map_state_choropleth.json", {actions:false})
+      .catch(e => { console.error(e); document.getElementById('map').textContent = e; });
+  </script>
+</body>
+</html>
