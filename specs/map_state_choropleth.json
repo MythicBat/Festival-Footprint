@@ -1,0 +1,67 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 960,
+  "height": 520,
+  "title": "Australian Music Festivals by State/Territory (FY2022–23)",
+  "view": {"stroke": null},
+  "projection": {"type": "equirectangular", "center":[134, -26], "scale": 1100},
+  "layer": [
+    {
+      "data": {
+        "url": "geo/au_states_2021.topo.json.json",
+        "format": {"type": "topojson", "feature": "STE_2021_AUST_GDA2020"}
+      },
+      "transform": [
+        { "calculate": "datum.properties.STE_NAME21", "as": "state_full" },
+        {
+          "calculate": "datum.state_full == 'Australian Capital Territory' ? 'ACT' : datum.state_full == 'New South Wales' ? 'NSW' : datum.state_full == 'Northern Territory' ? 'NT' : datum.state_full == 'Queensland' ? 'QLD' : datum.state_full == 'South Australia' ? 'SA' : datum.state_full == 'Tasmania' ? 'TAS' : datum.state_full == 'Victoria' ? 'VIC' : datum.state_full == 'Western Australia' ? 'WA' : null",
+          "as": "state_abbr"
+        },
+        {
+          "lookup": "state_full",
+          "from": {
+            "data": {"url": "data/festivals_by_state_2022_23.csv"},
+            "key": "state_territory",
+            "fields": ["festival_count"]
+          },
+          "as": "fc_full"
+        },
+        {
+          "lookup": "state_abbr",
+          "from": {
+            "data": {"url": "data/festivals_by_state_2022_23.csv"},
+            "key": "state_territory",
+            "fields": ["festival_count"]
+          },
+          "as": "fc_abbr"
+        },
+        {
+          "calculate": "isValid(datum.fc_full) ? datum.fc_full : (isValid(datum.fc_abbr) ? datum.fc_abbr : 0)",
+          "as": "festival_count_filled"
+        }
+      ],
+      "mark": {"type": "geoshape", "stroke": "#BDBDBD", "strokeWidth": 0.6},
+      "encoding": {
+        "color": {
+          "field": "festival_count_filled",
+          "type": "quantitative",
+          "title": "Festival count",
+          "scale": {"scheme": "blues"}
+        },
+        "tooltip": [
+          {"field": "state_full", "title": "State/Territory"},
+          {"field": "state_abbr", "title": "Abbrev"},
+          {"field": "festival_count_filled", "title": "Festival count"}
+        ]
+      }
+    },
+    {
+      "data": {"graticule": {"step": [30, 30]}},
+      "mark": {"type": "geoshape", "stroke": "#D5D5D5", "fill": null}
+    },
+    {
+      "data": {"sphere": true},
+      "mark": {"type": "geoshape", "fill": null, "stroke": "#9EC6FF", "strokeWidth": 0.75}
+    }
+  ]
+}
