@@ -56,6 +56,44 @@
       }
     },
     {
+      "data": {
+        "url": "geo/au_states_2021.topo.json",
+        "format": {"type": "topojson", "feature": "STE_2021_AUST_GDA2020"}
+      },
+      "transform": [
+        { "calculate": "datum.properties.STE_NAME21", "as": "state_full" },
+        {
+          "calculate":
+            "datum.state_full == 'Western Australia' ? 122 : datum.state_full == 'Northern Territory' ? 133 : datum.state_full == 'South Australia' ? 136 : datum.state_full == 'Queensland' ? 145 : datum.state_full == 'New South Wales' ? 147 : datum.state_full == 'Victoria' ? 144.5 : datum.state_full == 'Tasmania' ? 146.8 : datum.state_full == 'Australian Capital Territory' ? 149.1 : 134",
+          "as": "cx"
+        },
+        {
+          "calculate":
+            "datum.state_full == 'Western Australia' ? -26 : datum.state_full == 'Northern Territory' ? -19 : datum.state_full == 'South Australia' ? -30 : datum.state_full == 'Queensland' ? -20 : datum.state_full == 'New South Wales' ? -32 : datum.state_full == 'Victoria' ? -37 : datum.state_full == 'Tasmania' ? -42.1 : datum.state_full == 'Australian Capital Territory' ? -35.4 : -26",
+          "as": "cy"
+        },
+        {
+          "calculate":
+            "datum.state_full == 'Australian Capital Territory' ? 'ACT' : datum.state_full == 'New South Wales' ? 'NSW' : datum.state_full == 'Northern Territory' ? 'NT' : datum.state_full == 'Queensland' ? 'QLD' : datum.state_full == 'South Australia' ? 'SA' : datum.state_full == 'Tasmania' ? 'TAS' : datum.state_full == 'Victoria' ? 'VIC' : datum.state_full == 'Western Australia' ? 'WA' : ''",
+          "as": "abbr"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 14,
+        "fontWeight": "bold",
+        "fill": "#0b2239",
+        "stroke": "white",
+        "strokeWidth": 3,
+        "strokeJoin": "round"
+      },
+      "encoding": {
+        "longitude": {"field": "cx", "type": "quantitative"},
+        "latitude": {"field": "cy", "type": "quantitative"},
+        "text": {"field": "abbr"}
+      }
+    },
+    {
       "data": {"graticule": {"step": [30, 30]}},
       "mark": {"type": "geoshape", "stroke": "#D5D5D5", "fill": null}
     },
