@@ -1,0 +1,14 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": "container",
+    "height": 420,
+    "data": {"url": "data/festival_genres_percent.csv"},
+    "transform": [{"calculate": "datum.percent", "as": "pct"}],
+    "mark": {"type": "bar", "cornerRadiusEnd": 3},
+    "encoding": {
+        "y": {"field":"genre", "type": "nominal", "sort": "-x", "title": null},
+        "x": {"field":"pct", "type": "quantitative", "title": "Share of Festivals (%)"},
+        "color": {"field": "genre", "type": "nominal", "legend": null},
+        "tooltip": [{"field": "genre"}, {"field": "pct", "title": "Percent"}]
+    }
+}
