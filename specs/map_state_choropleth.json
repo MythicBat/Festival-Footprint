@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 960,
-  "height": 520,
+  "width": 600,
+  "height": 500,
   "title": "Australian Music Festivals by State/Territory (FY2022–23)",
   "view": {"stroke": null},
   "projection": {"type": "equirectangular", "center":[134, -26], "scale": 1100},
@@ -57,7 +57,7 @@
     },
     {
       "data": {
-        "url": "geo/au_states_2021.topo.json.json",
+        "url": "geo/au_states_2021.topo.json",
         "format": {"type": "topojson", "feature": "STE_2021_AUST_GDA2020"}
       },
       "transform": [

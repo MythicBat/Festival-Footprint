@@ -1,7 +1,7 @@
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "width":"container",
-    "height": 420,
+    "width": 500,
+    "height": 400,
     "data": {"url": "data/climate_capitals_monthly.csv"},
     "mark": {"type": "point", "filled": true},
     "encoding": {

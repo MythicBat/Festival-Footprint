@@ -1,7 +1,7 @@
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "width": "container",
-    "height": 420,
+    "width": 500,
+    "height": 400,
     "data": {"url": "data/festival_genres_percent.csv"},
     "transform": [{"calculate": "datum.percent", "as": "pct"}],
     "mark": {"type": "bar", "cornerRadiusEnd": 3},
