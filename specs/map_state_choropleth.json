@@ -57,7 +57,7 @@
     },
     {
       "data": {
-        "url": "geo/au_states_2021.topo.json",
+        "url": "geo/au_states_2021.topo.json.json",
         "format": {"type": "topojson", "feature": "STE_2021_AUST_GDA2020"}
       },
       "transform": [
