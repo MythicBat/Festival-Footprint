@@ -1,23 +1,52 @@
 <!doctype html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Map smoke test</title>
-</head>
-<body>
-  <h2>MUSIC FESTIVAL BY STATE</h2>
-  <div id="map" style="max-width:1000px;margin:0 auto;min-height:520px"></div>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Music Festivals in Australia</title>
+    <link rel="stylesheet" href="css/style.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  </head>
 
-  <!-- Load libs -->
-  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  <body>
+    <header class="wrap">
+      <h1>Music Festival Footprint: Where Australia Grooves</h1>
+      <p class="dek">Explore where festivals cluster, when the season peaks, which genres dominate,
+        and how climate shapes planning.
+      </p>
+    </header>
 
-  <!-- Embed a tiny test spec -->
-  <script>
-    vegaEmbed("#map", "specs/map_state_choropleth.json", {actions:false})
-      .catch(e => { console.error(e); document.getElementById('map').textContent = e; });
-  </script>
-</body>
+    <main class="wrap">
+      <section class="grid">
+        <div class="col-2">
+          <h2>Festivals by State/Territory</h2>
+          <div id="radial"></div>
+        </div>
+      </section>
+
+      <section class="grid">
+        <div class="col-1">
+          <h2>Genre Mix</h2>
+          <div id="genres"></div>
+        </div>
+        <div class="col-1">
+          <h2>Climate Comfort (Capitals)</h2>
+          <div id="climate"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="wrap">
+      <small>© 2025 Alin Merchant • Data: Creative Australia (festival counts), BoM (climate) • Built with Vega-Lite</small>
+    </footer>
+
+    <script>
+      vegaEmbed("#map", "specs/map_state_choropleth.json", {actions:false});
+      vegaEmbed("#radial", "specs/radial_calendar.json", {actions:false});
+      vegaEmbed("#genres", "specs/genres_by_state.json", {actions:false});
+      vegaEmbed("#climate", "specs/climate_scatter.json", {actions:false});
+    </script>
+  </body>
 </html>
