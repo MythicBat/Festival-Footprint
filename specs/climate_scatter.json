@@ -1,0 +1,18 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width":"container",
+    "height": 420,
+    "data": {"url": "data/climate_capitals_monthly.csv"},
+    "mark": {"type": "point", "filled": true},
+    "encoding": {
+        "x": {"field": "avg_max_c", "type": "quantitative", "title": "Avg Max Temp (°C)"},
+        "y": {"field": "avg_rain_mm", "type": "quantitative", "title": "Avg Rainfall (mm)"},
+        "shape": {"field": "month", "type": "ordinal", "title": "Month"},
+        "color": {"field": "city", "type": "nominal", "title": "City"},
+        "tooltip": [
+            {"field": "city"}, {"field": "state"}, {"field": "month"},
+            {"field": "avg_max_c", "title": "Max °C"},
+            {"field": "avg_rain_mm", "title": "Rain mm"}
+        ]
+    }
+}
