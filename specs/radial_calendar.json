@@ -6,7 +6,7 @@
 
   "params": [
     {
-      "name": "hoverMonth",
+      "name": "radialHoverMonth",
       "select": {
         "type": "point",
         "fields": ["month"],
@@ -35,7 +35,7 @@
           "legend": { "orient": "bottom", "columns": 4 }
         },
         "opacity": {
-          "condition": { "param": "hoverMonth", "empty": false, "value": 1 },
+          "condition": { "param": "radialHoverMonth", "empty": false, "value": 1 },
           "value": 0.6
         },
         "tooltip": [
@@ -45,7 +45,7 @@
       }
     },
     {
-      "transform": [ { "filter": { "param": "hoverMonth" } } ],
+      "transform": [ { "filter": { "param": "radialHoverMonth" } } ],
       "mark": { "type": "text", "radius": 60, "fontWeight": "bold", "fontSize": 16 },
       "encoding": { "text": { "field": "month" } }
     }
