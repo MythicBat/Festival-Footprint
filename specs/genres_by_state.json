@@ -2,17 +2,14 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 520,
   "height": 420,
-  "data": { "url": "data/festival_genres_percent.csv", "format": {"type":"csv"} },
+  "data": { "url": "data/festival_genres_percent.csv", "format": {"type": "csv"} },
   "transform": [
     {
       "calculate":
-        "toNumber(replace(replace(trim(isValid(datum.percent)?datum.percent:(isValid(datum.Percent)?datum.Percent:(isValid(datum.share)?datum.share:(isValid(datum.Share)?datum.Share:'')))), '%', ''), ' ', ''))",
+        "toNumber(replace(trim(isValid(datum[' percent']) ? datum[' percent'] : (isValid(datum.percent) ? datum.percent : (isValid(datum.Percent) ? datum.Percent : (isValid(datum.share) ? datum.share : (isValid(datum.Share) ? datum.Share : ''))))), '%', ''))",
       "as": "pct"
     },
-    {
-      "calculate": "isValid(datum.genre)?datum.genre:(isValid(datum.Genre)?datum.Genre:'')",
-      "as": "genre_clean"
-    },
+    { "calculate": "isValid(datum.genre) ? datum.genre : (isValid(datum.Genre) ? datum.Genre : '')", "as": "genre_clean" },
     { "filter": "isValid(datum.genre_clean) && isFinite(datum.pct)" }
   ],
   "mark": { "type": "bar", "cornerRadiusEnd": 3 },
