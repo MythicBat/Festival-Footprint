@@ -82,9 +82,9 @@
         "type": "text",
         "fontSize": 14,
         "fontWeight": "bold",
-        "fill": "#0b2239",
-        "stroke": "white",
-        "strokeWidth": 3,
+        "fill": "#111827",
+        "stroke": "#ffffff",
+        "strokeWidth": 2,
         "strokeJoin": "round"
       },
       "encoding": {
