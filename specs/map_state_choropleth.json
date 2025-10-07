@@ -40,6 +40,12 @@
           "as": "festival_count_filled"
         }
       ],
+      "params": [
+        {
+          "name": "stateSel",
+          "select": {"type": "point", "fields": ["state_full"] }
+        }
+      ],
       "mark": {"type": "geoshape", "stroke": "#BDBDBD", "strokeWidth": 0.6},
       "encoding": {
         "color": {
@@ -47,6 +53,10 @@
           "type": "quantitative",
           "title": "Festival count",
           "scale": {"scheme": "blues"}
+        },
+        "opacity": {
+          "condition": {"param": "stateSel", "empty": false, "value": 1},
+          "value": 0.45
         },
         "tooltip": [
           {"field": "state_full", "title": "State/Territory"},
