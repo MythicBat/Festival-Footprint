@@ -1,126 +1,74 @@
-/* ---------- Base Styles ---------- */
-body {
-  font-family: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
-  background-color: #fafafa;
-  color: #222;
-  margin: 0;
-  padding: 0;
-  text-align: center;
+/* ---------- Base ---------- */
+:root{
+  --bg:#fafafa; --fg:#222; --muted:#555; --card:#fff; --accent:#1a237e;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; background:var(--bg); color:var(--fg);
+  font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;
 }
 
-h1 {
-  font-size: 26px;
-  margin-top: 30px;
-  margin-bottom: 6px;
-  color: #1a237e;
-  font-weight: 700;
+/* ---------- Header ---------- */
+.wrap{max-width:1200px; margin:0 auto; padding:0 16px}
+h1{margin:28px 0 6px; font-size:26px; color:var(--accent); font-weight:700; text-align:center}
+.subtitle{margin:0 0 22px; color:var(--muted); text-align:center; font-size:15px}
+
+/* ---------- Grid ---------- */
+/* A single grid system used for every row */
+.grid{
+  display:grid;
+  /* Each item gets at least 420px; grid auto-fits as many columns as possible */
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap:28px;
+  margin:28px 0;
+  justify-items:center;   /* center items when fewer columns fit */
+  align-items:start;
 }
 
-.subtitle {
-  font-size: 15px;
-  color: #555;
-  margin-bottom: 25px;
+/* Make elements that should span the whole row */
+.col-2{grid-column:1 / -1}
+
+/* ---------- Cards (chart containers) ---------- */
+.chart{
+  background:var(--card);
+  border-radius:16px;
+  padding:12px;
+  width: clamp(420px, 48vw, 560px);   /* responsive width for normal charts */
+  min-height:420px;
+  box-shadow:0 2px 12px rgba(0,0,0,.06);
 }
 
-h2 {
-  color: #1a237e;
-  margin-bottom: 10px;
-}
-
-/* ---------- Layout ---------- */
-.wrap {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 16px;
-}
-
-.grid {
-  display: grid;
-  gap: 28px;
-  margin: 28px 0;
-}
-
-@media (min-width: 900px) {
-  .grid {
-    grid-template-columns: repeat(2, minmax(400px, 1fr));
-  }
-}
-
-.col-1 {
-  grid-column: auto;
-}
-
-.col-2 {
-  grid-column: 1 / -1;
-}
-
-/* ---------- Charts ---------- */
-.chart {
-  background: #fff;
-  border-radius: 16px;
-  padding: 12px;
-  min-height: 420px;
-  min-width: 420px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-}
-
-.chart.wide {
-  width: 760px;
+/* Map + overlay should be wider; still responsive + centered */
+.chart.wide{
+  width: clamp(700px, 90vw, 900px);
   margin: 0 auto;
 }
 
-.chart.center {
-  margin: 0 auto;
-  width: 420px;
+/* Radial sits centered at a comfortable width */
+.chart.center{
+  width: clamp(360px, 42vw, 460px);
+  justify-self:center;
 }
 
-/* ---------- Insights Section ---------- */
-.insights {
-  background: #f3f6fa;
-  border-radius: 12px;
-  padding: 20px;
-  max-width: 900px;
-  margin: 40px auto 20px;
-  text-align: left;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-}
+/* Headings inside cards */
+.chart h2{margin:6px 0 10px; font-size:18px; color:var(--accent); text-align:left}
 
-.insights h2 {
-  margin-bottom: 10px;
-  font-size: 18px;
-  color: #1a237e;
+/* ---------- Insights ---------- */
+.insights{
+  background:#f3f6fa; border-radius:12px; padding:20px;
+  max-width:900px; margin:34px auto 20px; text-align:left;
+  box-shadow:0 2px 10px rgba(0,0,0,.05)
 }
-
-.insights ul {
-  margin: 0;
-  padding-left: 20px;
-  line-height: 1.6;
-  color: #333;
-}
+.insights h2{margin:0 0 10px; font-size:18px; color:var(--accent)}
+.insights ul{margin:0; padding-left:20px; line-height:1.6; color:#333}
 
 /* ---------- Footer ---------- */
-.footer {
-  margin-top: 40px;
-  padding-bottom: 30px;
-  font-size: 13px;
-  color: #777;
-}
+.footer{margin:40px auto 30px; text-align:center; color:#777; font-size:13px}
 
-/* ---------- Responsive Tweaks ---------- */
-@media (max-width: 768px) {
-  h1 {
-    font-size: 22px;
-  }
-
-  .chart {
-    min-width: 100%;
-  }
-
-  .chart.wide {
-    width: 100%;
-  }
-
-  .wrap {
-    padding: 0 10px;
-  }
+/* ---------- Small screens ---------- */
+@media (max-width: 480px){
+  .grid{grid-template-columns:1fr}
+  .chart{width: 100%}
+  .chart.wide{width: 100%}
 }
