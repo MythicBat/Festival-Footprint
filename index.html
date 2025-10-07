@@ -95,7 +95,7 @@
       // Map listener
       vegaEmbed("#map", "specs/map_state_choropleth.json", opts).then(res => {
         res.view.addSignalListener('stateSel', (_, value) => {
-          let state = value && value.values && value.values.length ? value.values[0] : null;
+          const state = value && value.values && value.values[0] ? value.values[0] : null;
           const city = state ? stateToCapital[state] : null;
           if (climateView) climateView.signal('selectedCity', city).run();
         });
