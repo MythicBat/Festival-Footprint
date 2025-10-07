@@ -1,0 +1,48 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Festival Climate Sweet Spot (Capitals)",
+  "width": 760,
+  "height": 440,
+  "data": { "url": "data/climate_capitals_monthly.csv" },
+  "params": [
+    {
+      "name": "cityFilter",
+      "bind": {
+        "input": "select",
+        "options": [null,"Adelaide","Brisbane","Canberra","Darwin","Hobart","Melbourne","Perth","Sydney"],
+        "labels": ["All Cities","Adelaide","Brisbane","Canberra","Darwin","Hobart","Melbourne","Perth","Sydney"]
+      },
+      "value": null
+    }
+  ],
+  "transform": [
+    { "calculate": "toNumber(datum.month)", "as": "mnum" },
+    {
+      "calculate": "['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][datum.mnum-1]",
+      "as": "mon"
+    },
+    {
+      "lookup": "mon",
+      "from": {
+        "data": {"url": "data/festivals_by_month_percent.csv"},
+        "key": "month",
+        "fields": ["percent"]
+      },
+      "as": "month_share"
+    },
+    { "filter": "cityFilter == null || datum.city == cityFilter" }
+  ],
+  "mark": {"type": "circle", "opacity": 0.8},
+  "encoding": {
+    "x": {"field": "avg_max_c", "type": "quantitative", "title": "Avg Max Temp (°C)"},
+    "y": {"field": "avg_rain_mm", "type": "quantitative", "title": "Avg Rainfall (mm)"},
+    "size": {"field": "month_share", "type": "quantitative", "title": "Festival Share (%)"},
+    "color": {"field": "city", "type": "nominal"},
+    "tooltip": [
+      {"field": "city"}, {"field": "mon", "title": "Month"},
+      {"field": "avg_max_c", "title": "Temp (°C)"}, {"field": "avg_rain_mm", "title": "Rain (mm)"},
+      {"field": "month_share", "title": "Festival Share (%)"}
+    ]
+  },
+  "view": {"stroke": null}
+}
