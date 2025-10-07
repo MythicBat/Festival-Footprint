@@ -73,21 +73,36 @@
   <!-- Embed after DOM is ready -->
   <script>
     window.addEventListener('DOMContentLoaded', () => {
-      // Helpful console logging if something fails
       const opts = { actions: false };
+      let climateView = null;
 
-      // Ensure these IDs exist in the DOM:
-      vegaEmbed("#map", "specs/map_state_choropleth.json", opts)
-        .catch(e => console.error("Map embed error:", e));
-
-      vegaEmbed("#genres", "specs/genres_by_state.json", opts)
-        .catch(e => console.error("Genres embed error:", e));
-
+      // Embed climate first
       vegaEmbed("#climate", "specs/climate_scatter.json", opts)
-        .catch(e => console.error("Climate embed error:", e));
+        .then(res => { climateView = res.view; });
+      
+      // Mapping from state to city
+      const stateToCapital = {
+        "New South Wales": "Sydney",
+        "Victoria": "Melbourne",
+        "Queensland": "Brisbane",
+        "Western Australia": "Perth",
+        "South Australia": "Adelaide",
+        "Tasmania": "Hobart",
+        "Northern Territory": "Darwin",
+        "Australian Capital Territory": "Canberra"
+      };
 
-      vegaEmbed("#radial", "specs/radial_calendar.json", opts)
-        .catch(e => console.error("Radial embed error:", e));
+      // Map listener
+      vegaEmbed("#map", "specs/map_state_choropleth.json", opts).then(res => {
+        res.view.addSignalListener('stateSel', (_, value) => {
+          let state = value && value.values && value.values.length ? value.values[0] : null;
+          const city = state ? stateToCapital[state] : null;
+          if (climateView) climateView.signal('selectedCity', city).run();
+        });
+      });
+
+      vegaEmbed("#genres", "specs/genres_by_state.json", opts);
+      vegaEmbed("#radial", "specs/radial_calendar.json", opts);
     });
   </script>
 </body>
