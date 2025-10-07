@@ -1,10 +1,11 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 1100,
-  "height": 800,
-  "title": "Australian Music Festivals by State/Territory (FY2022–23)",
+  "autosize": {"type": "fit", "contains": "padding" },
+  "width": "container",
+  "height": 420,
+  "title": "Australian Music Festivals by State/Territory",
   "view": {"stroke": null},
-  "projection": {"type": "equirectangular", "center":[134, -26], "scale": 1100},
+  "projection": {"type": "equirectangular"},
   "layer": [
     {
       "data": {
