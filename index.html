@@ -1,25 +1,23 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Music Festival Footprint (Australia)</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🎵 Music Festival Footprint: Where Australia Grooves</title>
 
   <!-- Styles -->
   <link rel="stylesheet" href="css/style.css" />
 
-  <!-- Vega libs -->
+  <!-- Vega Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
-
-  <!-- Favicons are optional -->
-  <meta name="theme-color" content="#0b2239" />
 </head>
+
 <body>
   <header class="wrap">
-    <h1>Music Festival Footprint: Where Australia Grooves</h1>
-    <p class="dek">
+    <h1>🎵 Music Festival Footprint: Where Australia Grooves</h1>
+    <p class="subtitle">
       Explore where festivals cluster, when the season peaks, which genres dominate, and how climate shapes planning.
     </p>
   </header>
@@ -27,60 +25,67 @@
   <main class="wrap">
     <!-- Row 1: Map -->
     <section class="grid">
-      <div class="col-2">
+      <div class="col-2 chart wide">
         <h2>Festivals by State/Territory</h2>
-        <div id="map" aria-label="Choropleth of Australian festivals by state"></div>
+        <div id="map"></div>
       </div>
     </section>
 
-    <!-- Row 2: Genres + Climate -->
+    <!-- Row 2: Genres and Climate -->
     <section class="grid">
-      <div class="col-1">
+      <div class="col-1 chart">
         <h2>Genre Mix</h2>
-        <div id="genres" aria-label="Bar chart of festival genre shares"></div>
+        <div id="genres"></div>
       </div>
-      <div class="col-1">
+      <div class="col-1 chart">
         <h2>Climate Comfort (Capitals)</h2>
-        <div id="climate" aria-label="Scatterplot of capital-city climate by month"></div>
+        <div id="climate"></div>
       </div>
     </section>
 
-    <!-- Row 3: Radial seasonality (optional placement) -->
+    <!-- Row 3: Radial Calendar -->
     <section class="grid">
-      <div class="col-1">
+      <div class="col-1 chart center">
         <h2>Festival Seasonality</h2>
-        <div id="radial" aria-label="Radial chart of monthly festival share"></div>
+        <div id="radial"></div>
       </div>
     </section>
 
+    <!-- Row 4: Climate Overlay -->
+    <section class="grid">
+      <div class="col-2 chart wide">
+        <h2>Festival Climate Sweet Spot</h2>
+        <div id="overlay"></div>
+      </div>
+    </section>
+
+    <!-- Insights Section -->
     <section class="insights">
       <h2>Key Insights</h2>
       <ul>
-        <li>Festival Activity concentrates in <strong>NSW</strong> and <strong>VIC</strong>, with Queensland a strong third</li>
-        <li>Seasonality peaks across <strong>October-March</strong>, aligning with Australia's warmest months</li>
-        <li><strong>Electronic</strong> and <strong>Rock</strong> dominate the national genre mix, while Jazz and Classical reimain niche.</li>
-        <li>Ideal outdoor festival comfort occurs aroung <strong>20-30 °C</strong> and <strong>&lt;120 mm</strong> rainfall.</li>
+        <li><strong>NSW</strong> and <strong>VIC</strong> dominate Australia’s festival scene, followed by Queensland.</li>
+        <li>Festival season peaks between <strong>October–March</strong>, aligning with the warmer months.</li>
+        <li><strong>Electronic</strong> and <strong>Rock</strong> genres lead the pack, reflecting modern tastes.</li>
+        <li>Optimal festival weather sits around <strong>20–30 °C</strong> and under <strong>120 mm rainfall</strong>.</li>
       </ul>
     </section>
   </main>
 
-  <footer class="wrap" style="margin-bottom:40px">
-    <small>
-      © 2025 Alin Merchant • Data: Creative Australia (festival counts), BoM/WeatherAUS (climate) • Built with Vega-Lite
-    </small>
+  <footer class="wrap footer">
+    <small>© 2025 Alin Merchant • Data: Creative Australia (Soundcheck) & BoM • Built with Vega-Lite</small>
   </footer>
 
-  <!-- Embed after DOM is ready -->
+  <!-- Embeds -->
   <script>
-    window.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener("DOMContentLoaded", () => {
       const opts = { actions: false };
-      let climateView = null;
 
-      // Embed climate first
+      // 1. Embed Climate chart first so we can update it dynamically
+      let climateView = null;
       vegaEmbed("#climate", "specs/climate_scatter.json", opts)
         .then(res => { climateView = res.view; });
-      
-      // Mapping from state to city
+
+      // 2. Mapping: State → Capital City
       const stateToCapital = {
         "New South Wales": "Sydney",
         "Victoria": "Melbourne",
@@ -92,17 +97,19 @@
         "Australian Capital Territory": "Canberra"
       };
 
-      // Map listener
+      // 3. Map embed with signal listener for filtering
       vegaEmbed("#map", "specs/map_state_choropleth.json", opts).then(res => {
-        res.view.addSignalListener('stateSel', (_, value) => {
+        res.view.addSignalListener("stateSel", (_, value) => {
           const state = value && value.values && value.values[0] ? value.values[0] : null;
           const city = state ? stateToCapital[state] : null;
-          if (climateView) climateView.signal('selectedCity', city).run();
+          if (climateView) climateView.signal("selectedCity", city).run();
         });
       });
 
+      // 4. Other charts
       vegaEmbed("#genres", "specs/genres_by_state.json", opts);
       vegaEmbed("#radial", "specs/radial_calendar.json", opts);
+      vegaEmbed("#overlay", "specs/festival_climate_overlay.json", opts);
     });
   </script>
 </body>
