@@ -1,12 +1,40 @@
 /* ---------- Base ---------- */
-:root{
-  --bg:#fafafa; --fg:#222; --muted:#555; --card:#fff; --accent:#1a237e;
+:root {
+  --bg1: #f6f8ff;
+  --bg2: #eef2ff;
+  --bg3: #eaf6ff;
+  --ink: #0d1440;
+  --card: #ffffff;
 }
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0; background:var(--bg); color:var(--fg);
-  font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;
+
+html,body{height: 100%;}
+
+body {
+  margin: 0;
+  color: #222;
+  font-family: Inter, Segoe UI, Roboto, Arial, sans-serif;
+
+  /* Layered radial gradient for depth */
+  background:
+    radial-gradient(1200px 800px at 10% -10%, #e9f2ff 0%, transparent 55%),
+    radial-gradient(900px 600px at 110% 0%, #f3e9ff 0%, transparent 55%),
+    radial-gradient(600px 400px at 0% 100%, #e7fff7 0%, transparent 60%),
+    linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 60%, var(--bg3) 100%);
+  
+  /* Subtle noise for print-like finish*/
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::after {
+  content: "";
+  position: fixed; inset: 0;
+  pointer-events: none;
+  background-image: url('data:image/svg+xml;utf8,\
+  <svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" opacity=".04">\
+  <filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" stitchTiles="stitch"/></filter>\
+  <rect width="100%" height="100%" filter="url(%23n)" /></svg>');
+  background-size: 240px 240px;
 }
 
 /* ---------- Header ---------- */
@@ -30,13 +58,16 @@ h1{margin:28px 0 6px; font-size:26px; color:var(--accent); font-weight:700; text
 .col-2{grid-column:1 / -1}
 
 /* ---------- Cards (chart containers) ---------- */
-.chart{
-  background:var(--card);
-  border-radius:16px;
-  padding:12px;
-  width: clamp(420px, 48vw, 560px);   /* responsive width for normal charts */
-  min-height:420px;
-  box-shadow:0 2px 12px rgba(0,0,0,.06);
+.chart {
+  background: var(--card);
+  border-radius: 16px;
+  box-shadow: 0 10px 24px rgba(17, 24, 39, .06);
+  transition: transform .35s cubic-bezier(.2, .8, .2, 1);
+}
+
+.chart:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 36px rgba(17,24,39,.10);
 }
 
 /* Map + overlay should be wider; still responsive + centered */
@@ -72,3 +103,51 @@ h1{margin:28px 0 6px; font-size:26px; color:var(--accent); font-weight:700; text
   .chart{width: 100%}
   .chart.wide{width: 100%}
 }
+
+/* Short, clean annotations */
+.note {
+  margin: 10px 8px 4px;
+  padding: 10px 12px;
+  background: #f7f9fc;
+  border: 1px solid #e6ecf5;
+  border-radius: 10px;
+  color: #243b53;
+  font-size: 14px;
+  line-height: 1.45;
+  text-align: left;
+}
+
+.note strong{color: #0f2a6b;}
+.note em{font-style: normal; color: #1f6feb;}
+
+/* Two-column layout for pie + side note */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
+  justify-content: center;
+  gap: 24px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@keyframes fadeInUp {
+  0% {opacity: 0; transform: translateY(16px);}
+  100% {opacity: 1; transform: translateY(0);}
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.reveal.show {
+  animation: fadeInUp .6s cubic-bezier(.2, .8, .2, 1) forwards;
+}
+
+/* stagger helpers */
+.delay-1 {animation-delay: .06s}
+.delay-2 {animation-delay: .12s}
+.delay-3 {animation-delay: .18s}
+.delay-4 {animation-delay: .24s}
