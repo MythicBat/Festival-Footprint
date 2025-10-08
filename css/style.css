@@ -72,13 +72,3 @@ h1{margin:28px 0 6px; font-size:26px; color:var(--accent); font-weight:700; text
   .chart{width: 100%}
   .chart.wide{width: 100%}
 }
-
-main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.chart {
-  margin: 0 auto;
-}
