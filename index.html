@@ -141,6 +141,22 @@
       vegaEmbed("#radial", "specs/radial_calendar.json", opts);
       vegaEmbed("#overlay", "specs/festival_climate_overlay.json", opts);
     });
+
+    // Add .reveal to all cards and notes
+    document.querySelectorAll('.chart, .note').forEach((el, i) => {
+      el.classList.add('reveal', `delay-${(i%4)+1}`);
+    });
+
+    // IntersectionObserver to show them when in view
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show');});
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // Header pop-in
+    const header = document.querySelector('header.wrap');
+    if (header) { header.classList.add('reveal', 'show'); }
   </script>
 </body>
 </html>
