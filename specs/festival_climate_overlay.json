@@ -1,8 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": "Festival Climate Sweet Spot (Capitals)",
-  "width": 760,
-  "height": 440,
+  "width": 380,
+  "height": 380,
   "data": { "url": "data/climate_capitals_monthly.csv" },
   "params": [
     {
