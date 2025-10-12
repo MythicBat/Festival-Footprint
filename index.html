@@ -20,6 +20,33 @@
     <p class="subtitle">
       Explore where festivals cluster, when the season peaks, which genres dominate, and how climate shapes planning.
     </p>
+
+    <!-- Filter Panel -->
+    <div class="filter-panel reveal">
+      <label>🎛 State:</label>
+      <select id="stateFilter">
+        <option value="">All</option>
+        <option>ACT</option>
+        <option>NSW</option>
+        <option>NT</option>
+        <option>QLD</option>
+        <option>SA</option>
+        <option>TAS</option>
+        <option>VIC</option>
+        <option>WA</option>
+      </select>
+
+      <label>🎚 Genre:</label>
+      <select id="genreFilter">
+        <option value="">All</option>
+        <option>Electronic</option><option>Rock</option><option>Country</option>
+        <option>Indie</option><option>Folk</option><option>Blues</option>
+        <option>Hip-hop</option><option>Jazz</option><option>Classical</option>
+        <option>R&B</option><option>Reggae</option><option>Metal</option>
+        <option>Pop</option><option>Alternative</option><option>Mixed</option>
+        <option>Other</option>
+      </select>
+    </div>
   </header>
 
   <main class="wrap">
@@ -107,56 +134,42 @@
 
   <!-- Embeds -->
   <script>
-    window.addEventListener("DOMContentLoaded", () => {
-      const opts = { actions: false };
-
-      // 1. Embed Climate chart first so we can update it dynamically
-      let climateView = null;
-      vegaEmbed("#climate", "specs/climate_scatter.json", opts)
-        .then(res => { climateView = res.view; });
-
-      // 2. Mapping: State → Capital City
-      const stateToCapital = {
-        "New South Wales": "Sydney",
-        "Victoria": "Melbourne",
-        "Queensland": "Brisbane",
-        "Western Australia": "Perth",
-        "South Australia": "Adelaide",
-        "Tasmania": "Hobart",
-        "Northern Territory": "Darwin",
-        "Australian Capital Territory": "Canberra"
-      };
-
-      // 3. Map embed with signal listener for filtering
-      vegaEmbed("#map", "specs/map_state_choropleth.json", opts).then(res => {
-        res.view.addSignalListener("stateSel", (_, value) => {
-          const state = value && value.values && value.values[0] ? value.values[0] : null;
-          const city = state ? stateToCapital[state] : null;
-          if (climateView) climateView.signal("selectedCity", city).run();
-        });
+    let mapView=null, genresView=null, climateView=null, radialView=null, overlayView=null;
+    
+    // Embed charts
+    vegaEmbed("#map", "specs/map_state_choropleth.json", {action: false})
+    .then(res => {
+      mapView=res.view;
+      // click -> set dropdown
+      res.view.addSignalListener("stateSel", (_,v) => {
+        const st=v && v.values && v.values[0]?v.values[0]:null;
+        const abbrMap = {
+          "New South Wals": "NSW", "Victoria": "VIC", "Queensland": "QLD",
+          "Weatern Australia": "WA", "South Australia": "SA", "Tasmania": "TAS",
+          "Northern Territory": "NT", "Australian Capital Territory": "ACT"
+        };
+        document.getElementById("stateFilter").value = st?abbrMap[st]:"";
+        pushFilters();
       });
-
-      // 4. Other charts
-      vegaEmbed("#genres", "specs/genres_by_state.json", opts);
-      vegaEmbed("#radial", "specs/radial_calendar.json", opts);
-      vegaEmbed("#overlay", "specs/festival_climate_overlay.json", opts);
     });
 
-    // Add .reveal to all cards and notes
-    document.querySelectorAll('.chart, .note').forEach((el, i) => {
-      el.classList.add('reveal', `delay-${(i%4)+1}`);
-    });
+    vegaEmbed("#genres", "specs/genres_by_state.json", {action:false}).then(r => genresView=r.view);
+    vegaEmbed("#climate", "specs/climate_scatter.json", {action:false}).then(r => climateView=r.view);
+    vegaEmbed("#radial", "specs/radial_calendar.json", {action:false}).then(r => radialView=r.view);
+    vegaEmbed("#overlay", "specs/festival_climate_overlay.json", {action:false}).then(r => overlayView=r.view);
 
-    // IntersectionObserver to show them when in view
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show');});
-    }, { threshold: 0.12 });
-
-    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
-    // Header pop-in
-    const header = document.querySelector('header.wrap');
-    if (header) { header.classList.add('reveal', 'show'); }
+    // Push dropdown values into all charts
+    function pushFilters() {
+      const st = document.getElementById("stateFilter").value;
+      const gn = document.getElementById("genreFilter").value;
+      [genresView, climateView, radialView, overlayView].forEach(v => {
+        if (!v) return;
+        try{v.signal("uiState",st).run();} catch{}
+        try{v.signal("uiGenre",gn).run();} catch{}
+      });
+    }
+    document.getElementById("stateFilter").onchange=pushFilters;
+    document.getElementById("genreFilter").onchange=pushFilters;
   </script>
 </body>
 </html>

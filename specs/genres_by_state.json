@@ -3,6 +3,10 @@
   "width": 380,
   "height": 380,
   "data": { "url": "data/festival_genres_percent.csv", "format": {"type": "csv"} },
+  "params": [
+    {"name": "uiState", "value": ""},
+    {"name": "uiGenre", "value": ""}
+  ],
   "transform": [
     {
       "calculate":
@@ -10,7 +14,9 @@
       "as": "pct"
     },
     { "calculate": "isValid(datum.genre) ? datum.genre : (isValid(datum.Genre) ? datum.Genre : '')", "as": "genre_clean" },
-    { "filter": "isValid(datum.genre_clean) && isFinite(datum.pct)" }
+    { "filter": "isValid(datum.genre_clean) && isFinite(datum.pct)" },
+    { "filter": "uiGenre== '' || datum.genre==uiGenre"},
+    { "filter": "uiState== '' || datum.state==uiState"}
   ],
   "mark": { "type": "bar", "cornerRadiusEnd": 3 },
   "encoding": {

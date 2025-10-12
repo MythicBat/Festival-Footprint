@@ -3,8 +3,10 @@
     "width": 400,
     "height": 380,
     "data": {"url": "data/climate_capitals_monthly.csv"},
-    "params": [{"name": "selectedCity", "value": null}],
-    "transform": [{"filter": "selectedCity == null || datum.city == selectedCity"}],
+    "params": [{"name": "selectedCity", "value": null}, {"name": "uiState", "value": ""}, {"name": "uiGenre", "value": ""}],
+    "transform": [{"filter": "selectedCity == null || datum.city == selectedCity"},
+                  {"filter": "uiState=='' || datum.state_abbr==uiState"},
+                  {"filter": "uiGenre=='' || datum.genre == uiGenre"}],
     "mark": {"type": "point", "filled": true},
     "encoding": {
         "x": {"field": "avg_max_c", "type": "quantitative", "title": "Avg Max Temp (°C)"},

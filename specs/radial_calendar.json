@@ -4,11 +4,17 @@
   "width": 380,
   "height": 380,
   "data": {"url": "data/festivals_by_month_percent.csv"},
+  "params": [
+    {"name": "uiState", "value": ""},
+    {"name": "uiGenre", "value": ""}
+  ],
   "transform": [
     {
       "calculate": "indexof(['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'], datum.month)",
       "as": "monthIndex"
-    }
+    },
+    {"filter": "uiState=='' || datum.state == uiState"},
+    {"filter": "uiGenre=='' || datum.genre == uiGenre"}
   ],
   "mark": { "type": "arc", "innerRadius": 70, "cornerRadius": 3 },
   "encoding": {
