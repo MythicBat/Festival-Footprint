@@ -22,7 +22,7 @@
     </p>
 
     <!-- Filter Panel -->
-    <div class="filter-panel reveal">
+    <div class="filter-panel">
       <label>🎛 State:</label>
       <select id="stateFilter">
         <option value="">All</option>
@@ -132,6 +132,18 @@
       </div>
     </section>
 
+    <section class="grid">
+      <div class="chart">
+        <h2>Genre x State</h2>
+        <div id="matrix"></div>
+        <p class="note">
+          <strong>How styles spread:</strong>
+          Larger circles show where a genre is especially active. Use the filters above to
+          compare a single state or spotlight a genre's regional footprint.
+        </p>
+      </div>
+    </section>
+
     <!-- Insights Section -->
     <section class="insights">
       <h2>Key Insights</h2>
@@ -150,7 +162,7 @@
 
   <!-- Embeds -->
   <script>
-    let mapView=null, genresView=null, climateView=null, radialView=null, overlayView=null, raceView=null;
+    let mapView=null, genresView=null, climateView=null, radialView=null, overlayView=null, raceView=null, matrixView=null;
     
     // Embed charts
     vegaEmbed("#map", "specs/map_state_choropleth.json", {action: false})
@@ -174,6 +186,7 @@
     vegaEmbed("#radial", "specs/radial_calendar.json", {action:false}).then(r => radialView=r.view);
     vegaEmbed("#overlay", "specs/festival_climate_overlay.json", {action:false}).then(r => overlayView=r.view);
     vegaEmbed("#race", "specs/race_by_state.json", {action:false}).then(r => raceView=r.view);
+    vegaEmbed("#matrix", "specs/genre_state_bubbles.json", {action:false}).then(r => matrixView=r.view);
 
     setInterval(() => {
       if (!raceView) return;
@@ -184,9 +197,9 @@
 
     // Push dropdown values into all charts
     function pushFilters() {
-      const st = document.getElementById("stateFilter").value;
-      const gn = document.getElementById("genreFilter").value;
-      [genresView, climateView, radialView, overlayView].forEach(v => {
+      const st = document.getElementById("stateFilter")?.value || "";
+      const gn = document.getElementById("genreFilter")?.value || "";
+      [genresView, climateView, radialView, overlayView, matrixView].forEach(v => {
         if (!v) return;
         try{v.signal("uiState",st).run();} catch{}
         try{v.signal("uiGenre",gn).run();} catch{}

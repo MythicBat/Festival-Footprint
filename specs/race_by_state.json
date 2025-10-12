@@ -5,10 +5,14 @@
     "params": [
         {
             "name": "yr", "value": 2023, "bind": {"input": "range", "min": 2016, "max": 2023, "step": 1}
-        }
+        },
+        {"name": "uiState", "value": ""},
+        {"name": "uiGenre", "value": ""}
     ],
     "transform": [
-        {"filter": "datum.year == yr"}
+        {"filter": "datum.year == yr"},
+        {"filter": "uiState == '' || datum.state == uiState"},
+        {"filter": "uiGenre == '' || datum.genre == uiGenre"}
     ],
     "mark": { "type": "bar", "cornerRadiusEnd": 4},
     "encoding": {

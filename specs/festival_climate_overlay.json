@@ -13,9 +13,7 @@
         "labels": ["All Cities","Adelaide","Brisbane","Canberra","Darwin","Hobart","Melbourne","Perth","Sydney"]
       },
       "value": null
-    },
-    {"name": "uiState", "value": ""},
-    {"name": "uiGenre", "value": ""}
+    }
   ],
   "transform": [
     { "calculate": "toNumber(datum.month)", "as": "mnum" },
@@ -32,9 +30,7 @@
       },
       "as": "month_share"
     },
-    { "filter": "cityFilter == null || datum.city == cityFilter" },
-    {"filter": "uiGenre=='' || datum.genre == uiGenre"},
-    {"filter": "uiState=='' || datum.state == uiState"}
+    { "filter": "cityFilter == null || datum.city == cityFilter" }
   ],
   "mark": {"type": "circle", "opacity": 0.8},
   "encoding": {
