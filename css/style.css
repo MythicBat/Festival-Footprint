@@ -151,3 +151,20 @@ h1{margin:28px 0 6px; font-size:26px; color:var(--accent); font-weight:700; text
 .delay-2 {animation-delay: .12s}
 .delay-3 {animation-delay: .18s}
 .delay-4 {animation-delay: .24s}
+
+.filter-panel {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 1px solid #e8edf5;
+  padding: 10px 14px;
+  border-radius: 12px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+  margin: 10px auto 18px;
+  width: fit-content;
+}
+
+.filter-panel label {font-weight: 600; color: #0f2a6b;}
+.filter-panel select {padding: 6px 8px; border-radius: 8px; border: 1px solid #ccd7ea; background: #f9fbff;}
