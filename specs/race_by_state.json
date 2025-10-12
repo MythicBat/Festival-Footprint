@@ -1,0 +1,27 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Festivals by State (2016 - 2023)",
+    "data": {"url": "data/festivals_by_state_year.csv"},
+    "params": [
+        {
+            "name": "yr", "value": 2023, "bind": {"input": "range", "min": 2016, "max": 2023, "step": 1}
+        }
+    ],
+    "transform": [
+        {"filter": "datum.year == yr"}
+    ],
+    "mark": { "type": "bar", "cornerRadiusEnd": 4},
+    "encoding": {
+        "y": {"field": "state", "type": "nominal", "sort": "-x", "title": null},
+        "x": {"field": "festival_count", "type": "quantitative", "title": "Festivals"},
+        "color": {"field": "state", "type": "nominal", "legend": null},
+        "tooltip": [
+            {"field": "state"},
+            {"field": "festival_state", "title": "Festivals"},
+            {"field": "year"}
+        ]
+    },
+    "width": 640,
+    "height": 320,
+    "view": {"stroke": null}
+}
