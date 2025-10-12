@@ -1,0 +1,23 @@
+{
+  "$schema":"https://vega.github.io/schema/vega-lite/v5.json",
+  "title":"Genres by State (Bubble Matrix)",
+  "data":{"url":"data/festivals_by_state_genre.csv"},
+  "params":[
+    {"name":"uiState","value":""},
+    {"name":"uiGenre","value":""}
+  ],
+  "transform":[
+    {"filter":"uiState=='' || datum.state==uiState"},
+    {"filter":"uiGenre=='' || datum.genre==uiGenre"}
+  ],
+  "mark":{"type":"circle","opacity":0.9, "tooltip": true},
+  "encoding":{
+    "x":{"field":"state","type":"nominal","axis":{"labelAngle":0,"title":null}},
+    "y":{"field":"genre","type":"nominal","sort":"-x","title":null},
+    "size":{"field":"count","type":"quantitative","legend":{"title":"Festivals"}, "scale":{"range":[20,1800]}},
+    "color":{"field":"genre","type":"nominal","legend":null}
+  },
+  "width": 720,
+  "height": 420,
+  "view":{"stroke":null}
+}
