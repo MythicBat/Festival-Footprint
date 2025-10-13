@@ -1,0 +1,38 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Top Festival Capitals Over Time (2019–2023)",
+  "width": 800,
+  "height": 400,
+  "data": { "url": "data/festival_capitals_year.csv" },
+
+  "params": [
+    {
+      "name": "yearSelect",
+      "value": 2019,
+      "bind": { "input": "range", "min": 2019, "max": 2023, "step": 1, "name": "Year " }
+    }
+  ],
+
+  "transform": [{ "filter": "datum.year == yearSelect" }],
+
+  "mark": { "type": "bar", "cornerRadiusEnd": 4 },
+
+  "encoding": {
+    "y": { "field": "city", "type": "nominal", "sort": "-x", "title": null },
+    "x": { "field": "festival_count", "type": "quantitative", "title": "Festival Count" },
+    "color": { "field": "city", "type": "nominal", "legend": null, "scale": { "scheme": "tableau10" } },
+    "text": { "field": "festival_count", "type": "quantitative" },
+    "tooltip": [
+      { "field": "city", "title": "City" },
+      { "field": "year", "title": "Year" },
+      { "field": "festival_count", "title": "Festival Count" }
+    ]
+  },
+
+  "config": {
+    "axis": { "labelFontSize": 12, "titleFontSize": 13 },
+    "title": { "fontSize": 16, "fontWeight": "bold" },
+    "view": { "stroke": null },
+    "background": "transparent"
+  }
+}
