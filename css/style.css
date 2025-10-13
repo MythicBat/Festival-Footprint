@@ -209,3 +209,25 @@ h1{margin:28px 0 6px; font-size:26px; color:var(--accent); font-weight:700; text
   background-image: url("https://www.transparenttextures.com/patterns/noise-pattern-with-subtle-cross-lines.png");
   opacity: 0.25;
 }
+
+.chart-block {
+  background: var(--card);
+  border-radius: 18px;
+  padding: 1.5rem;
+  margin: 2rem auto;
+  width: 90%;
+  box-shadow: var(--shadow);
+}
+
+.chart-block h2 {
+  color: var(--text);
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.chart-block .note {
+  margin-top: .75rem;
+  color: var(--muted);
+  font-size: .9rem;
+  line-height: 1.4;
+}

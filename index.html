@@ -85,18 +85,27 @@
         </p>
       </div>
       <div class="col-1 chart">
-        <h2>Climate Comfort (Capitals)</h2>
-        <div id="climate"></div>
+        <h2>Genre x State</h2>
+        <div id="matrix"></div>
         <p class="note">
-          <strong>When Weather Meets Rhythm:</strong>  
-          Australia's diverse climate shapes the festival experience as much as the music itself.  
-          Cities like <strong>Melbourne</strong> and <strong>Sydney</strong> enjoy mild temperatures ideal for multi-day outdoor events, while <strong>Darwin</strong> and <strong>Brisbane</strong> favour tropical bursts of celebration before the summer rains.  
-          With most festivals thriving between <strong>20-30 °C</strong> and low rainfall, organisers and fans alike chase that perfect balance between sunshine, comfort, and sound — where the weather becomes part of the music.
+          <strong>How styles spread:</strong>
+          Larger circles show where a genre is especially active. Use the filters above to
+          compare a single state or spotlight a genre's regional footprint.
         </p>
       </div>
     </section>
 
-    <!-- Row 3: Radial Calendar and Festival Sweet Spot -->
+    <section class="chart-block">
+      <h2>🎖️ Top Festival Capitals Leaderboard</h2>
+      <div id="leaderboard"></div>
+      <p class="note">
+        This animated leaderboard reveals how Australia’s urban music scenes evolve year-by-year.  
+        Sydney and Melbourne continue their healthy rivalry for the festival crown, 
+        while Brisbane and Perth steadily grow their footprints — proof that live music culture is thriving across the nation.
+      </p>
+    </section>
+
+    <!-- Row 4: Radial Calendar and Festival Sweet Spot -->
     <section class="grid grid-2">
       <div class="col-1 chart">
         <h2>Festival Seasonality</h2>
@@ -138,18 +147,6 @@
       </div>
     </section>
 
-    <section class="grid">
-      <div class="chart">
-        <h2>Genre x State</h2>
-        <div id="matrix"></div>
-        <p class="note">
-          <strong>How styles spread:</strong>
-          Larger circles show where a genre is especially active. Use the filters above to
-          compare a single state or spotlight a genre's regional footprint.
-        </p>
-      </div>
-    </section>
-
     <!-- Insights Section -->
     <section class="insights">
       <h2>Key Insights</h2>
@@ -168,7 +165,7 @@
 
   <!-- Embeds -->
   <script>
-    let mapView=null, genresView=null, climateView=null, radialView=null, overlayView=null, raceView=null, matrixView=null;
+    let mapView=null, genresView=null, climateView=null, radialView=null, overlayView=null, raceView=null, matrixView=null, leaderboardView=null, autoplayTimer;
     
     // Embed charts
     vegaEmbed("#map", "specs/map_state_choropleth.json", {action: false})
@@ -188,11 +185,32 @@
     });
 
     vegaEmbed("#genres", "specs/genres_by_state.json", {action:false}).then(r => genresView=r.view);
-    vegaEmbed("#climate", "specs/climate_scatter.json", {action:false}).then(r => climateView=r.view);
     vegaEmbed("#radial", "specs/radial_calendar.json", {action:false}).then(r => radialView=r.view);
     vegaEmbed("#overlay", "specs/festival_climate_overlay.json", {action:false}).then(r => overlayView=r.view);
     vegaEmbed("#race", "specs/race_by_state.json", {action:false}).then(r => raceView=r.view);
     vegaEmbed("#matrix", "specs/genre_state_bubbles.json", {action:false}).then(r => matrixView=r.view);
+    vegaEmbed("#leaderboard", "specs/festival_capitals_race.json", {action:false}).then(
+      res => {
+        leaderboardView = res.view;
+
+        startLeaderBoardAutoplay();
+      }
+    );
+
+    function startLeaderBoardAutoplay() {
+      clearInterval(autoplayTimer);
+      let y = 2019;
+      autoplayTimer = setInterval(() => {
+        // read current in case user moved the slider
+        try { y = leaderboardView.signal("yearSelect"); } catch(e) {}
+        const next = (y >= 2023) ? 2019 : (y + 1);
+        leaderboardView.signal("yearSelect", next).run();
+        y = next;
+      }, 1200);   // 1.2s per year
+    }
+
+    document.querySelector("#leaderboard").addEventListener("mouseenter", () => clearInterval(autoplayTimer));
+    document.querySelector("#leaderboard").addEventListener("mouseleave", startLeaderBoardAutoplay);
 
     setInterval(() => {
       if (!raceView) return;

@@ -17,7 +17,7 @@
     "size":{"field":"count","type":"quantitative","legend":{"title":"Festivals"}, "scale":{"range":[20,1800]}},
     "color":{"field":"genre","type":"nominal","legend":null}
   },
-  "width": 720,
-  "height": 420,
+  "width": 380,
+  "height": 450,
   "view":{"stroke":null}
 }
