@@ -168,3 +168,44 @@ h1{margin:28px 0 6px; font-size:26px; color:var(--accent); font-weight:700; text
 
 .filter-panel label {font-weight: 600; color: #0f2a6b;}
 .filter-panel select {padding: 6px 8px; border-radius: 8px; border: 1px solid #ccd7ea; background: #f9fbff;}
+
+/*-- Parallax Background Drift -- */
+.parallax {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  overflow: hidden;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Each layer uses gradients or subtle pattern */
+.layer {
+  position: absolute;
+  width: 120%; height: 120%;
+  top: -10%;
+  left: -10%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.35;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+/* Back layer - soft gradient sky */
+.layer-back {
+  background: linear-gradient(180deg, #dceaff 0%, #f9f9ff 100%);
+}
+
+/* Middle layer - abstract radial light texture */
+.layer-mid {
+  background: radial-gradient(circle at 20% 40%, rgba(255, 240, 220, 0.5) 0%, transparent 70%),
+              radial-gradient(circle at 80% 60%, rgba(200, 220, 255, 0.5) 0%, transparent 70%);
+  opacity: 0.3;
+}
+
+/* Front Layer - soft noise overlay */
+.layer-front {
+  background-image: url("https://www.transparenttextures.com/patterns/noise-pattern-with-subtle-cross-lines.png");
+  opacity: 0.25;
+}

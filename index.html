@@ -15,6 +15,12 @@
 </head>
 
 <body>
+  <div class="parallax">
+    <div class="layer layer-back"></div>
+    <div class="layer layer-mid"></div>
+    <div class="layer layer-front"></div>
+  </div>
+
   <header class="wrap">
     <h1>🎵 Music Festival Footprint: Where Australia Grooves</h1>
     <p class="subtitle">
@@ -207,6 +213,28 @@
     }
     document.getElementById("stateFilter").onchange=pushFilters;
     document.getElementById("genreFilter").onchange=pushFilters;
+
+    // Parallax drfit on mouse move
+    document.addEventListener("mousemove", e => {
+      const { innerWidth:w, innerHeight:h } = window;
+      const x = (e.clientX / w - 0.5) * 2;
+      const y = (e.clientY / h - 0.5) * 2;
+
+      document.querySelectorAll(".layer").forEach((el, i) => {
+        const depth = (i+1) * 10; // adjust speed by layer
+        el.style.transform = `translate(${x * depth}px, ${y * depth}px) scale(1.05)`;
+      });
+    });
+
+    // Slow automatic drift when idle
+    let angle = 0;
+    setInterval(() => {
+      angle += 0.002;
+      document.querySelectorAll(".layer").forEach((el, i) => {
+        const depth = (i+1)*4;
+        el.style.transform = `translate(${Math.sin(angle)*depth}px, ${Math.cos(angle)*depth}px) scale(1.05)`;
+      });
+    }, 50);
   </script>
 </body>
 </html>
