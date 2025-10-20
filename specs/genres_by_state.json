@@ -20,7 +20,7 @@
   "encoding": {
     "y": { "field": "genre_clean", "type": "nominal", "sort": "-x", "title": null },
     "x": { "field": "pct", "type": "quantitative", "title": "Share of festivals (%)" },
-    "color": { "field": "genre_clean", "type": "nominal", "legend": null },
+    "color": { "field": "genre_clean", "type": "nominal","scale": {"range": ["#56B4E9", "#E69F00", "#009E73", "#CC79A7", "#F0E442", "#D55E00", "#0072B2", "#999999", "#000000"]}, "legend": null },
     "tooltip": [
       { "field": "genre_clean", "title": "Genre" },
       { "field": "pct", "title": "Percent", "format": ".0f" }

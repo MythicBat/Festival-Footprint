@@ -16,7 +16,7 @@
     "color": {
       "field": "month",
       "type": "nominal",
-      "scale": {"scheme": "tableau10"},
+      "scale": {"domain": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], "range": ["#56B4E9", "#E69F00", "#009E73", "#CC79A7", "#F0E442", "#0072B2", "#D55E00", "#999999"]},
       "legend": {"orient": "bottom", "columns": 6}
     },
     "order": {"field": "monthIndex"},

@@ -37,7 +37,7 @@
     "x": {"field": "avg_max_c", "type": "quantitative", "title": "Avg Max Temp (°C)"},
     "y": {"field": "avg_rain_mm", "type": "quantitative", "title": "Avg Rainfall (mm)"},
     "size": {"field": "month_share", "type": "quantitative", "title": "Festival Share (%)"},
-    "color": {"field": "city", "type": "nominal"},
+    "color": {"field": "city", "type": "nominal", "scale": {"range": ["#56B4E9", "#E69F00", "#009E73", "#CC79A7", "#F0E442", "#0072B2", "#D55E00", "#999999"]}},
     "tooltip": [
       {"field": "city"}, {"field": "mon", "title": "Month"},
       {"field": "avg_max_c", "title": "Temp (°C)"}, {"field": "avg_rain_mm", "title": "Rain (mm)"},

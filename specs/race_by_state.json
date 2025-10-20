@@ -18,7 +18,7 @@
     "encoding": {
         "y": {"field": "state", "type": "nominal", "sort": "-x", "title": null},
         "x": {"field": "festival_count", "type": "quantitative", "title": "Festivals"},
-        "color": {"field": "state", "type": "nominal", "legend": null},
+        "color": {"field": "state", "type": "nominal", "scale": {"range": ["#56B4E9", "#E69F00", "#009E73", "#CC79A7", "#F0E442", "#0072B2", "#D55E00", "#999999"]},"legend": null},
         "tooltip": [
             {"field": "state"},
             {"field": "festival_count", "title": "Festivals"},

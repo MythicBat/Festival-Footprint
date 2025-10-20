@@ -15,7 +15,7 @@
     "x":{"field":"state","type":"nominal","axis":{"labelAngle":0,"title":null}},
     "y":{"field":"genre","type":"nominal","sort":"-x","title":null},
     "size":{"field":"count","type":"quantitative","legend":{"title":"Festivals"}, "scale":{"range":[20,1800]}},
-    "color":{"field":"genre","type":"nominal","legend":null}
+    "color":{"field":"genre","type":"nominal","scale": {"range": ["#56B4E9", "#E69F00", "#009E73", "#CC79A7", "#F0E442", "#D55E00", "#0072B2", "#999999", "#000000"]},"legend":null}
   },
   "width": 380,
   "height": 450,
